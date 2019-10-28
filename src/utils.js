@@ -40,9 +40,6 @@ export function getParsedTextData(rawText) {
     let data = rawText.split("\n");
 
     data = data.map(el => {
-      if (el === "") {
-        return undefined;
-      }
       return el.split(" ").filter(element => element);    
     });
 
