@@ -47,7 +47,7 @@ export function getParsedTextData(rawText) {
     const parsedDataCelsius = [];
 
     data.forEach((row, idx) => {
-      if (row.length === 3) {
+      if (row.length >= 3) {
         if (
           isNaN(row[0]) &&
           isNaN(row[1]) &&

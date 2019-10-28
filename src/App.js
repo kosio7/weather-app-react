@@ -20,7 +20,7 @@ function App() {
   // }, []);
 
   useEffect(() => {
-      fetch("/weather_data.txt")
+      fetch("/weather.txt")
         .then(r => r.text())
         .then(data => {
           setWeatherData(getParsedTextData(data))
