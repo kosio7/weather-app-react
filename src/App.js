@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import SortableTable from "./components/SortableTable";
+import { getParsedTextData } from "./utils";
 
 function App() {
-  function convertFahToCel(fahDegree) {
-    let celsiusTemp = Math.round((5 / 9) * (fahDegree - 32));
-
-    return celsiusTemp;
-  }
-
   function handleOptionChange(e) {
     setSelectedTempType(e.target.value);
   }
@@ -16,44 +11,20 @@ function App() {
   const [weatherData, setWeatherData] = useState({});
   const [selectedTempType, setSelectedTempType] = useState("fah");
 
+  // useEffect(() => {
+  //   fetch("/weather.json")
+  //     .then(r => r.text())
+  //     .then(data => {
+  //       setWeatherData(getParsedJsonData(JSON.parse(data)));
+  //     });
+  // }, []);
+
   useEffect(() => {
-    function getParsedData(rawJSON) {
-      const parsedDataFahreinheit = [];
-      const parsedDataCelsius = [];
-
-      Object.keys(rawJSON).forEach((key, idx) => {
-        if (rawJSON[key] !== "") {
-          const rowFahrenheit = rawJSON[key].split(" ");
-
-          if (
-            isNaN(rowFahrenheit[0]) &&
-            isNaN(rowFahrenheit[1]) &&
-            isNaN(rowFahrenheit[2])
-          ) {
-            parsedDataCelsius.push({ key: idx, value: rowFahrenheit });
-          } else {
-            const minTempInCelsius = convertFahToCel(rowFahrenheit[2]);
-            const maxTempInCelsius = convertFahToCel(rowFahrenheit[1]);
-            const rowCelsius = [
-              rowFahrenheit[0],
-              maxTempInCelsius,
-              minTempInCelsius
-            ];
-            parsedDataCelsius.push({ key: idx, value: rowCelsius });
-          }
-
-          parsedDataFahreinheit.push({ key: idx, value: rowFahrenheit });
-        }
-      });
-
-      return { parsedDataFahreinheit, parsedDataCelsius };
-    }
-
-    fetch("/weather.json")
-      .then(r => r.text())
-      .then(data => {
-        setWeatherData(getParsedData(JSON.parse(data)));
-      });
+      fetch("/weather_data.txt")
+        .then(r => r.text())
+        .then(data => {
+          setWeatherData(getParsedTextData(data))
+        })
   }, []);
 
   return (
