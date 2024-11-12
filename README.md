@@ -12,6 +12,7 @@
   
 ### Demo
 Update: Demo is not available for now.
+
 :star: [weather-app-react](https://confident-lamport-d93f7f.netlify.com/) :star:
 
 ### Running The App locally
